@@ -1,24 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Filter from './components/Filter';
+import PokemonList from './pages/PokemonList';
+import PokemonDetail from './pages/PokemonDetails';
 
 function App() {
+  const [search, setSearch] = useState(''); // Déplacer l'état de la recherche ici
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Filter search={search} setSearch={setSearch} />
+        <Routes>
+          <Route path="/" exact element={<PokemonList search={search} />} /> {/* Passer l'état de la recherche en tant que props */}
+          <Route path="/pokemon/:id" element={<PokemonDetail />} />
+        </Routes>
+    </Router>
   );
 }
 
